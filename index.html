@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TradeLearn Pro - تعلم التداول</title>
+
+<meta name="description"
+content="TradeLearn منصة تعليمية مبسطة لتعلم أساسيات التداول والشموع اليابانية وإدارة المخاطر باستخدام أموال افتراضية.">
+
+<meta name="theme-color" content="#0b1120">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+:root{
+    --bg:#0b1120;
+    --card:#111827;
+    --card2:#172236;
+    --border:#263247;
+    --text:#fff;
+    --muted:#9eacc0;
+    --green:#35e0a1;
+    --red:#ff5b67;
+    --blue:#4da3ff;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.3s;
+}
+
+body.light{
+    --bg:#eef2f7;
+    --card:#fff;
+    --card2:#e7edf5;
+    --border:#d2dbe7;
+    --text:#172033;
+    --muted:#657287;
+}
+
+button{
+    font-family:inherit;
+}
+
+.header{
+    height:70px;
+    background:var(--card);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    z-index:1000;
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.menu{
+    background:var(--card2);
+    border:0;
+    color:var(--text);
+    font-size:25px;
+    width:45px;
+    height:45px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.balance-top{
+    background:var(--card2);
+    padding:10px 15px;
+    border-radius:10px;
+    color:var(--green);
+    font-weight:bold;
+}
+
+.sidebar{
+    position:fixed;
+    top:70px;
+    right:-280px;
+    width:270px;
+    height:calc(100vh - 70px);
+    background:var(--card);
+    padding:20px;
+    z-index:999;
+    transition:.3s;
+    border-left:1px solid var(--border);
+    overflow-y:auto;
+}
+
+.sidebar.active{
+    right:0;
+}
+
+.sidebar h2{
+    margin-bottom:20px;
+}
+
+.nav-btn{
+    width:100%;
+    padding:14px;
+    margin-bottom:10px;
+    border:0;
+    border-radius:10px;
+    background:var(--card2);
+    color:var(--text);
+    text-align:right;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.nav-btn:hover{
+    opacity:.8;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    z-index:998;
+}
+
+.overlay.active{
+    display:block;
+}
+
+main{
+    padding:95px 18px 30px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:18px;
+}
+
+.hero{
+    padding:35px 25px;
+    background:linear-gradient(135deg,#14213d,#101827);
+    border-radius:20px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:32px;
+    margin-bottom:12px;
+}
+
+.hero p{
+    color:#aab6c8;
+    line-height:1.8;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.stat{
+    background:var(--card2);
+    padding:18px;
+    border-radius:14px;
+}
+
+.stat h3{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.stat strong{
+    font-size:25px;
+}
+
+.btn{
+    border:0;
+    background:var(--green);
+    color:#07110d;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:5px;
+}
+
+.btn.red{
+    background:var(--red);
+    color:#fff;
+}
+
+.btn.blue{
+    background:var(--blue);
+    color:#fff;
+}
+
+.btn.gray{
+    background:#263247;
+    color:#fff;
+}
+
+.progress{
+    width:100%;
+    height:12px;
+    background:#202c40;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:var(--green);
+    transition:.3s;
+}
+
+.lesson{
+    background:var(--card2);
+    padding:18px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
+.lesson h3{
+    margin-bottom:10px;
+}
+
+.lesson p{
+    color:var(--muted);
+    line-height:1.8;
+    margin-bottom:12px;
+}
+
+/* ADS */
+
+.ad-box{
+    width:100%;
+    min-height:90px;
+    background:var(--card);
+    border:1px dashed #40516b;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    margin-bottom:20px;
+    overflow:hidden;
+}
+
+.ad-label{
+    color:#8ea0b9;
+    font-size:12px;
+}
+
+.ad-small{
+    min-height:70px;
+}
+
+.ad-large{
+    min-height:140px;
+}
+
+/* DISCLAIMER */
+
+.disclaimer{
+    background:rgba(77,163,255,.08);
+    border:1px solid rgba(77,163,255,.3);
+    color:var(--muted);
+    padding:15px;
+    border-radius:14px;
+    line-height:1.8;
+    margin-bottom:18px;
+}
+
+/* CANDLES */
+
+.candle-box{
+    height:240px;
+    background:#0f1726;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:35px;
+    margin-top:15px;
+}
+
+.candle{
+    width:35px;
+    height:120px;
+    position:relative;
+    border-radius:5px;
+}
+
+.candle:before{
+    content:"";
+    position:absolute;
+    width:3px;
+    height:170px;
+    background:#ddd;
+    left:16px;
+    top:-25px;
+}
+
+.green{
+    background:var(--green);
+}
+
+.red{
+    background:var(--red);
+}
+
+/* CHART */
+
+.chart-box{
+    background:#0f1726;
+    border-radius:15px;
+    padding:10px;
+    margin-top:15px;
+}
+
+canvas{
+    width:100%;
+    height:300px;
+}
+
+.price{
+    font-size:38px;
+    color:var(--green);
+    font-weight:bold;
+    margin:15px 0;
+    text-align:center;
+}
+
+.history-item{
+    padding:12px;
+    border-bottom:1px solid var(--border);
+    color:var(--muted);
+}
+
+/* QUIZ */
+
+.question{
+    font-size:20px;
+    margin-bottom:20px;
+    line-height:1.7;
+}
+
+.answers{
+    display:grid;
+    gap:10px;
+}
+
+.answer{
+    background:var(--card2);
+    color:var(--text);
+    border:1px solid var(--border);
+    padding:14px;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:right;
+}
+
+.answer.correct{
+    background:#176c51;
+}
+
+.answer.wrong{
+    background:#71313a;
+}
+
+.result{
+    text-align:center;
+    padding:25px;
+    font-size:20px;
+}
+
+/* ACHIEVEMENTS */
+
+.achievement{
+    background:var(--card2);
+    padding:18px;
+    border-radius:14px;
+    margin-bottom:12px;
+}
+
+.achievement.locked{
+    opacity:.45;
+}
+
+/* PROFILE */
+
+.avatar{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:var(--card2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:10px auto 20px;
+    font-size:55px;
+    overflow:hidden;
+    border:3px solid var(--green);
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+}
+
+.profile{
+    text-align:center;
+}
+
+.profile-name{
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.profile-info{
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.profile-actions{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+/* SETTINGS */
+
+.setting{
+    background:var(--card2);
+    padding:17px;
+    border-radius:14px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.setting-info h3{
+    margin-bottom:6px;
+}
+
+.setting-info p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.switch{
+    position:relative;
+    width:52px;
+    height:28px;
+    flex-shrink:0;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+    background:#445166;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.slider:before{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:22px;
+    right:3px;
+    top:3px;
+    background:#fff;
+    border-radius:50%;
+    transition:.3s;
+}
+
+.switch input:checked + .slider{
+    background:var(--green);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(-24px);
+}
+
+.name-input{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    margin-top:10px;
+    outline:none;
+}
+
+.danger-zone{
+    border:1px solid var(--red);
+}
+
+.danger-zone h3{
+    color:var(--red);
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    color:var(--muted);
+    padding:25px 10px;
+    line-height:1.8;
+}
+
+.footer button{
+    background:none;
+    border:0;
+    color:var(--blue);
+    cursor:pointer;
+    margin:5px;
+}
+
+/* NOTIFICATION */
+
+.notification{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:#172236;
+    color:#fff;
+    padding:14px 20px;
+    border-radius:12px;
+    z-index:2000;
+    transition:.3s;
+    opacity:0;
+}
+
+.notification.show{
+    transform:translateX(-50%) translateY(0);
+    opacity:1;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:18px;
+    }
+
+    .balance-top{
+        font-size:12px;
+        padding:8px;
+    }
+
+    .hero h1{
+        font-size:25px;
+    }
+
+    main{
+        padding-left:12px;
+        padding-right:12px;
+    }
+
+    canvas{
+        height:230px;
+    }
+
+    .setting{
+        align-items:flex-start;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<button class="menu" onclick="openMenu()">☰</button>
+
+<div class="logo">
+🚀 TradeLearn
+</div>
+
+<div class="balance-top">
+💰 <span id="topBalance">10,000</span> DH
+</div>
+
+</header>
+
+<div class="sidebar" id="sidebar">
+
+<h2>📚 TradeLearn</h2>
+
+<button class="nav-btn" onclick="showPage('home')">🏠 الرئيسية</button>
+<button class="nav-btn" onclick="showPage('lessons')">📖 الدروس</button>
+<button class="nav-btn" onclick="showPage('market')">📈 السوق</button>
+<button class="nav-btn" onclick="showPage('candles')">🕯️ الشموع اليابانية</button>
+<button class="nav-btn" onclick="showPage('wallet')">💰 المحفظة الافتراضية</button>
+<button class="nav-btn" onclick="showPage('quiz')">🧠 الاختبار</button>
+<button class="nav-btn" onclick="showPage('achievements')">🏆 الإنجازات</button>
+<button class="nav-btn" onclick="showPage('profile')">👤 الملف الشخصي</button>
+<button class="nav-btn" onclick="showPage('privacy')">🛡️ الخصوصية</button>
+<button class="nav-btn" onclick="showPage('settings')">⚙️ الإعدادات</button>
+
+</div>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<main>
+
+<!-- HOME -->
+
+<section class="page active" id="home">
+
+<div class="ad-box ad-large">
+<div>
+<div class="ad-label">📢 مساحة إعلانية</div>
+<p style="color:var(--muted);margin-top:6px">
+سيتم ربط الإعلان الحقيقي هنا بعد إعداد AdSense.
+</p>
+</div>
+</div>
+
+<div class="hero">
+
+<h1>تعلم التداول بطريقة ذكية 🚀</h1>
+
+<p>
+تعلم أساسيات التداول، الشموع اليابانية،
+حركة الأسعار وإدارة المخاطر باستخدام
+أموال افتراضية فقط.
+</p>
+
+<br>
+
+<button class="btn" onclick="showPage('lessons')">
+ابدأ التعلم
+</button>
+
+</div>
+
+<div class="disclaimer">
+<strong>⚠️ تنبيه تعليمي:</strong><br>
+TradeLearn منصة تعليمية ومحاكاة فقط.
+الأموال والصفقات الموجودة داخل الموقع افتراضية
+وليست أموالًا حقيقية.
+</div>
+
+<div class="grid">
+
+<div class="stat">
+<h3>💰 الرصيد الافتراضي</h3>
+<strong><span id="homeBalance">10,000</span> DH</strong>
+</div>
+
+<div class="stat">
+<h3>⭐ النقاط</h3>
+<strong id="homePoints">0</strong>
+</div>
+
+<div class="stat">
+<h3>🎯 المستوى</h3>
+<strong id="homeLevel">1</strong>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h3>📊 تقدمك في الدروس</h3>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<p style="margin-top:10px;color:var(--muted)">
+<span id="progressText">0%</span>
+</p>
+
+</div>
+
+<div class="ad-box">
+<div class="ad-label">📢 إعلان</div>
+</div>
+
+</section>
+
+
+<!-- LESSONS -->
+
+<section class="page" id="lessons">
+
+<div class="card">
+
+<h2>📖 دروس التداول</h2>
+
+<p style="color:var(--muted);margin-top:10px">
+أكمل الدروس واحصل على نقاط.
+</p>
+
+</div>
+
+<div class="lesson">
+<h3>1️⃣ ما هو التداول؟</h3>
+<p>
+التداول هو شراء وبيع أصول مالية بهدف
+الاستفادة من تغير الأسعار.
+</p>
+<button class="btn" onclick="completeLesson(1)">
+إكمال الدرس
+</button>
+</div>
+
+<div class="lesson">
+<h3>2️⃣ كيف يتحرك السعر؟</h3>
+<p>
+يتحرك السعر بسبب العرض والطلب.
+</p>
+<button class="btn" onclick="completeLesson(2)">
+إكمال الدرس
+</button>
+</div>
+
+<div class="lesson">
+<h3>3️⃣ الربح والخسارة</h3>
+<p>
+إذا ارتفع سعر الأصل بعد شرائه يمكن أن تزيد
+قيمته، والعكس صحيح.
+</p>
+<button class="btn" onclick="completeLesson(3)">
+إكمال الدرس
+</button>
+</div>
+
+<div class="lesson">
+<h3>4️⃣ إدارة المخاطر</h3>
+<p>
+تعلم كيفية التعامل مع المخاطر وعدم المخاطرة
+بكل رأس المال في صفقة واحدة.
+</p>
+<button class="btn" onclick="completeLesson(4)">
+إكمال الدرس
+</button>
+</div>
+
+<div class="ad-box">
+<div class="ad-label">📢 مساحة إعلانية</div>
+</div>
+
+</section>
+
+
+<!-- MARKET -->
+
+<section class="page" id="market">
+
+<div class="card">
+
+<h2>📈 السوق الافتراضي</h2>
+
+<p style="color:var(--muted);margin-top:8px">
+سوق تجريبي للتعلم فقط.
+</p>
+
+<div class="price">
+<span id="marketPrice">100</span> DH
+</div>
+
+<div class="grid">
+
+<div class="stat">
+<h3>📈 التغير</h3>
+<strong id="marketChange">0%</strong>
+</div>
+
+<div class="stat">
+<h3>⬆️ أعلى سعر</h3>
+<strong id="marketHigh">100</strong>
+</div>
+
+<div class="stat">
+<h3>⬇️ أقل سعر</h3>
+<strong id="marketLow">100</strong>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="movePrice()">
+🔄 تحريك السعر
+</button>
+
+<button class="btn gray" onclick="resetMarket()">
+♻️ إعادة السعر
+</button>
+
+<div class="chart-box">
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CANDLES -->
+
+<section class="page" id="candles">
+
+<div class="card">
+
+<h2>🕯️ الشموع اليابانية</h2>
+
+<p style="color:var(--muted);line-height:1.8;margin-top:10px">
+Open = سعر الافتتاح<br>
+Close = سعر الإغلاق<br>
+High = أعلى سعر<br>
+Low = أقل سعر
+</p>
+
+<div class="candle-box">
+
+<div>
+<div class="candle green"></div>
+<p style="text-align:center;color:var(--green)">صاعدة</p>
+</div>
+
+<div>
+<div class="candle red"></div>
+<p style="text-align:center;color:var(--red)">هابطة</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WALLET -->
+
+<section class="page" id="wallet">
+
+<div class="card">
+
+<h2>💰 المحفظة الافتراضية</h2>
+
+<p style="color:var(--muted);margin-top:8px">
+جميع الأموال هنا افتراضية.
+</p>
+
+<div class="grid" style="margin-top:20px">
+
+<div class="stat">
+<h3>الرصيد</h3>
+<strong><span id="walletBalance">10,000</span> DH</strong>
+</div>
+
+<div class="stat">
+<h3>الأسهم</h3>
+<strong id="walletShares">0</strong>
+</div>
+
+<div class="stat">
+<h3>سعر السهم</h3>
+<strong><span id="walletPrice">100</span> DH</strong>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="buyStock()">🟢 شراء</button>
+<button class="btn red" onclick="sellStock()">🔴 بيع</button>
+
+<h3 style="margin-top:25px">
+قيمة المحفظة:
+<span id="portfolioValue">10,000</span> DH
+</h3>
+
+</div>
+
+<div class="card">
+
+<h3>📜 سجل العمليات</h3>
+
+<div id="history">
+لا توجد عمليات حتى الآن.
+</div>
+
+</div>
+
+<div class="ad-box">
+<div class="ad-label">📢 إعلان</div>
+</div>
+
+</section>
+
+
+<!-- QUIZ -->
+
+<section class="page" id="quiz">
+
+<div class="card">
+
+<h2>🧠 اختبار التداول</h2>
+
+<p style="color:var(--muted);margin-top:8px">
+أجب عن الأسئلة واختبر معلوماتك.
+</p>
+
+</div>
+
+<div class="card" id="quizBox">
+
+<div class="question" id="question">
+جاري تحميل السؤال...
+</div>
+
+<div class="answers" id="answers"></div>
+
+<p style="margin-top:20px;color:var(--muted)">
+السؤال <span id="questionNumber">1</span> من 5
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section class="page" id="achievements">
+
+<div class="card">
+<h2>🏆 الإنجازات</h2>
+</div>
+
+<div class="achievement locked" id="achievementLesson">
+📚 إكمال أول درس
+</div>
+
+<div class="achievement locked" id="achievementQuiz">
+🧠 النجاح في الاختبار
+</div>
+
+<div class="achievement locked" id="achievementTrade">
+💰 تنفيذ أول عملية افتراضية
+</div>
+
+<div class="achievement locked" id="achievementPoints">
+⭐ الوصول إلى 100 نقطة
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section class="page" id="profile">
+
+<div class="card profile">
+
+<h2>👤 الملف الشخصي</h2>
+
+<div class="avatar">
+
+<span id="avatarEmoji">👨‍💻</span>
+
+<img id="profileImage">
+
+</div>
+
+<div class="profile-actions">
+
+<button class="btn" onclick="changePhoto()">
+🖼️ تغيير الصورة
+</button>
+
+<button class="btn gray" onclick="removePhoto()">
+🗑️ حذف الصورة
+</button>
+
+</div>
+
+<input
+type="file"
+id="imageInput"
+accept="image/png,image/jpeg,image/webp"
+hidden
+>
+
+<div class="profile-name" id="profileName">
+متداول جديد 🚀
+</div>
+
+<div class="profile-info">
+استمر في التعلم لتطوير مستواك.
+</div>
+
+<div class="grid">
+
+<div class="stat">
+<h3>⭐ النقاط</h3>
+<strong id="profilePoints">0</strong>
+</div>
+
+<div class="stat">
+<h3>🎯 المستوى</h3>
+<strong id="profileLevel">1</strong>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PRIVACY -->
+
+<section class="page" id="privacy">
+
+<div class="card">
+
+<h2>🛡️ الخصوصية</h2>
+
+<p style="color:var(--muted);line-height:1.9;margin-top:15px">
+
+TradeLearn يحترم خصوصية المستخدمين.
+
+المعلومات التي يتم حفظها داخل الموقع، مثل
+التقدم والنقاط وبعض إعدادات المستخدم،
+يمكن أن يتم حفظها محليًا في متصفح الجهاز.
+
+إذا تم تفعيل الإعلانات مستقبلاً، فقد تستخدم
+خدمة الإعلانات تقنيات مثل ملفات تعريف الارتباط
+أو تقنيات مشابهة وفقًا لسياسات مزود الإعلانات.
+
+</p>
+
+<br>
+
+<h3>📚 المحتوى</h3>
+
+<p style="color:var(--muted);line-height:1.9;margin-top:8px">
+
+TradeLearn موقع تعليمي. المحتوى الموجود فيه
+مخصص للتعلم وليس توصية بشراء أو بيع أصل مالي.
+
+</p>
+
+<br>
+
+<h3>💰 الأموال الافتراضية</h3>
+
+<p style="color:var(--muted);line-height:1.9;margin-top:8px">
+
+كل الأموال والصفقات داخل المحاكاة افتراضية
+ولا تمثل أموالًا حقيقية.
+
+</p>
+
+</div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section class="page" id="settings">
+
+<div class="card">
+
+<h2>⚙️ الإعدادات</h2>
+
+<p style="color:var(--muted);margin-top:8px">
+خصص TradeLearn بالطريقة التي تناسبك.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>👤 اسم المستخدم</h3>
+
+<p style="color:var(--muted);margin-top:7px">
+اختر الاسم الذي سيظهر في ملفك الشخصي.
+</p>
+
+<input
+class="name-input"
+id="nameInput"
+type="text"
+maxlength="25"
+placeholder="اكتب اسمك هنا"
+>
+
+<button class="btn" onclick="saveName()">
+💾 حفظ الاسم
+</button>
+
+</div>
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>🌙 الوضع الداكن</h3>
+
+<p>تشغيل أو إيقاف المظهر الداكن.</p>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="darkMode"
+checked
+onchange="toggleDarkMode()"
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>🔔 الإشعارات</h3>
+
+<p>التحكم في التنبيهات داخل الموقع.</p>
+
+</div>
+
+<label class="switch">
+
+<input
+type="checkbox"
+id="notifications"
+checked
+onchange="toggleNotifications()"
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+<div class="card danger-zone">
+
+<h3>⚠️ منطقة الخطر</h3>
+
+<p style="color:var(--muted);line-height:1.8;margin-top:8px">
+
+إعادة ضبط البيانات ستحذف التقدم،
+النقاط، الرصيد الافتراضي،
+سجل العمليات والإعدادات المحفوظة.
+
+</p>
+
+<button class="btn red" onclick="resetAllData()">
+🗑️ إعادة ضبط TradeLearn
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+
+<p>🚀 TradeLearn — تعلم قبل أن تخاطر.</p>
+
+<p>
+موقع تعليمي ومحاكاة افتراضية فقط.
+</p>
+
+<button onclick="showPage('privacy')">
+🛡️ سياسة الخصوصية
+</button>
+
+</footer>
+
+
+<div class="notification" id="notification">
+تم الحفظ بنجاح ✅
+</div>
+
+
+<script>
+
+/* =========================
+DATA
+========================= */
+
+let balance =
+Number(localStorage.getItem("tl8_balance")) || 10000;
+
+let shares =
+Number(localStorage.getItem("tl8_shares")) || 0;
+
+let price =
+Number(localStorage.getItem("tl8_price")) || 100;
+
+let points =
+Number(localStorage.getItem("tl8_points")) || 0;
+
+let lessons =
+JSON.parse(localStorage.getItem("tl8_lessons") || "[]");
+
+let history =
+JSON.parse(localStorage.getItem("tl8_history") || "[]");
+
+let prices =
+JSON.parse(localStorage.getItem("tl8_prices") || "[100]");
+
+let quizReward =
+localStorage.getItem("tl8_quiz_reward") === "true";
+
+let profileImage =
+localStorage.getItem("tl8_profile_image") || "";
+
+let userName =
+localStorage.getItem("tl9_username") ||
+"متداول جديد 🚀";
+
+let darkMode =
+localStorage.getItem("tl9_dark_mode") !== "false";
+
+let notifications =
+localStorage.getItem("tl9_notifications") !== "false";
+
+
+/* MENU */
+
+function openMenu(){
+
+document.getElementById("sidebar")
+.classList.add("active");
+
+document.getElementById("overlay")
+.classList.add("active");
+
+}
+
+function closeMenu(){
+
+document.getElementById("sidebar")
+.classList.remove("active");
+
+document.getElementById("overlay")
+.classList.remove("active");
+
+}
+
+
+/* PAGES */
+
+function showPage(id){
+
+document.querySelectorAll(".page")
+.forEach(page=>{
+page.classList.remove("active");
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+closeMenu();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+if(id==="market"){
+setTimeout(drawChart,100);
+}
+
+}
+
+
+/* LESSONS */
+
+function completeLesson(number){
+
+if(!lessons.includes(number)){
+
+lessons.push(number);
+points+=20;
+
+saveData();
+
+showNotification("🎉 ممتاز! حصلت على +20 نقطة.");
+
+updateUI();
+
+}else{
+
+showNotification("هذا الدرس مكتمل بالفعل.");
+
+}
+
+}
+
+
+/* MARKET */
+
+function movePrice(){
+
+const change=Math.random()*10-5;
+
+price+=change;
+
+if(price<20){
+price=20;
+}
+
+price=Number(price.toFixed(2));
+
+prices.push(price);
+
+if(prices.length>30){
+prices.shift();
+}
+
+saveData();
+updateUI();
+drawChart();
+
+}
+
+function resetMarket(){
+
+price=100;
+prices=[100];
+
+saveData();
+updateUI();
+drawChart();
+
+}
+
+
+/* CHART */
+
+function drawChart(){
+
+const canvas=document.getElementById("chart");
+
+if(!canvas)return;
+
+const rect=canvas.getBoundingClientRect();
+
+if(rect.width===0)return;
+
+const dpr=window.devicePixelRatio||1;
+
+canvas.width=rect.width*dpr;
+canvas.height=300*dpr;
+
+const ctx=canvas.getContext("2d");
+
+ctx.setTransform(dpr,0,0,dpr,0,0);
+
+const width=rect.width;
+const height=300;
+
+ctx.clearRect(0,0,width,height);
+
+if(prices.length<2)return;
+
+const min=Math.min(...prices);
+const max=Math.max(...prices);
+const range=max-min||1;
+
+ctx.beginPath();
+
+prices.forEach((p,index)=>{
+
+const x=index/(prices.length-1)
+*(width-20)+10;
+
+const y=height-20-
+((p-min)/range)*(height-40);
+
+if(index===0){
+ctx.moveTo(x,y);
+}else{
+ctx.lineTo(x,y);
+}
+
+});
+
+ctx.strokeStyle="#35e0a1";
+ctx.lineWidth=3;
+ctx.stroke();
+
+}
+
+
+/* WALLET */
+
+function buyStock(){
+
+if(balance>=price){
+
+balance-=price;
+shares++;
+
+history.unshift(
+"🟢 شراء سهم بسعر "+
+price.toFixed(2)+" DH"
+);
+
+if(history.length>10){
+history.pop();
+}
+
+points+=5;
+
+saveData();
+updateUI();
+
+showNotification("🟢 تم شراء سهم افتراضي.");
+
+}else{
+
+showNotification("الرصيد الافتراضي غير كافٍ.");
+
+}
+
+}
+
+
+function sellStock(){
+
+if(shares>0){
+
+balance+=price;
+shares--;
+
+history.unshift(
+"🔴 بيع سهم بسعر "+
+price.toFixed(2)+" DH"
+);
+
+if(history.length>10){
+history.pop();
+}
+
+points+=5;
+
+saveData();
+updateUI();
+
+showNotification("🔴 تم بيع السهم الافتراضي.");
+
+}else{
+
+showNotification("لا تملك أسهمًا افتراضية.");
+
+}
+
+}
+
+
+/* QUIZ */
+
+const quizQuestions=[
+
+{
+q:"ماذا يعني Open في الشمعة اليابانية؟",
+answers:[
+"سعر الافتتاح",
+"أعلى سعر",
+"أقل سعر",
+"سعر الإغلاق"
+],
+correct:0
+},
+
+{
+q:"ماذا يعني Close؟",
+answers:[
+"أعلى سعر",
+"سعر الإغلاق",
+"سعر الافتتاح",
+"أقل سعر"
+],
+correct:1
+},
+
+{
+q:"ماذا يعني High؟",
+answers:[
+"سعر الافتتاح",
+"سعر الإغلاق",
+"أعلى سعر",
+"أقل سعر"
+],
+correct:2
+},
+
+{
+q:"ماذا يعني Low؟",
+answers:[
+"أقل سعر",
+"أعلى سعر",
+"سعر الإغلاق",
+"سعر الافتتاح"
+],
+correct:0
+},
+
+{
+q:"إذا ارتفع سعر السهم بعد شرائه، ماذا يحدث لقيمته؟",
+answers:[
+"تنخفض",
+"ترتفع",
+"تختفي",
+"لا يمكن أن تتغير"
+],
+correct:1
+}
+
+];
+
+let currentQuestion=0;
+let quizScore=0;
+let quizAnswered=false;
+
+function startQuiz(){
+
+currentQuestion=0;
+quizScore=0;
+quizAnswered=false;
+
+showQuizQuestion();
+
+}
+
+function showQuizQuestion(){
+
+const question=quizQuestions[currentQuestion];
+
+if(!question){
+
+finishQuiz();
+return;
+
+}
+
+quizAnswered=false;
+
+document.getElementById("question")
+.textContent=question.q;
+
+document.getElementById("questionNumber")
+.textContent=currentQuestion+1;
+
+const answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+question.answers.forEach((answer,index)=>{
+
+const button=document.createElement("button");
+
+button.className="answer";
+button.textContent=answer;
+
+button.onclick=()=>{
+checkQuizAnswer(index,button);
+};
+
+answers.appendChild(button);
+
+});
+
+}
+
+function checkQuizAnswer(index,button){
+
+if(quizAnswered)return;
+
+quizAnswered=true;
+
+const question=quizQuestions[currentQuestion];
+
+const buttons=document.querySelectorAll(".answer");
+
+buttons.forEach((btn,i)=>{
+
+if(i===question.correct){
+btn.classList.add("correct");
+}
+
+if(i===index && i!==question.correct){
+btn.classList.add("wrong");
+}
+
+btn.disabled=true;
+
+});
+
+if(index===question.correct){
+quizScore++;
+}
+
+setTimeout(()=>{
+
+currentQuestion++;
+showQuizQuestion();
+
+},900);
+
+}
+
+function finishQuiz(){
+
+const percentage=Math.round(
+quizScore/quizQuestions.length*100
+);
+
+const quizBox=document.getElementById("quizBox");
+
+quizBox.innerHTML=`
+
+<div class="result">
+
+<h2>🎉 انتهى الاختبار!</h2>
+
+<br>
+
+<p>
+النتيجة:
+<strong>
+${quizScore}/${quizQuestions.length}
+</strong>
+</p>
+
+<p style="margin-top:10px">
+النسبة:
+<strong>${percentage}%</strong>
+</p>
+
+<br>
+
+${
+percentage>=60
+?
+"<p>🏆 ممتاز! لقد نجحت.</p>"
+:
+"<p>📚 حاول مرة أخرى.</p>"
+}
+
+<br>
+
+<button class="btn" onclick="startQuiz()">
+🔄 إعادة الاختبار
+</button>
+
+</div>
+`;
+
+if(percentage>=60 && !quizReward){
+
+points+=30;
+quizReward=true;
+
+localStorage.setItem(
+"tl8_quiz_reward",
+"true"
+);
+
+saveData();
+
+}
+
+updateUI();
+
+}
+
+
+/* PHOTO */
+
+function changePhoto(){
+
+document.getElementById("imageInput").click();
+
+}
+
+document.getElementById("imageInput")
+.addEventListener("change",function(event){
+
+const file=event.target.files[0];
+
+if(!file)return;
+
+if(!file.type.startsWith("image/")){
+
+showNotification("اختر صورة فقط.");
+return;
+
+}
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+const img=new Image();
+
+img.onload=function(){
+
+const max=400;
+
+let width=img.width;
+let height=img.height;
+
+if(width>height){
+
+if(width>max){
+
+height*=max/width;
+width=max;
+
+}
+
+}else{
+
+if(height>max){
+
+width*=max/height;
+height=max;
+
+}
+
+}
+
+const canvas=document.createElement("canvas");
+
+canvas.width=Math.round(width);
+canvas.height=Math.round(height);
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(
+img,
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+profileImage=canvas.toDataURL(
+"image/jpeg",
+.82
+);
+
+localStorage.setItem(
+"tl8_profile_image",
+profileImage
+);
+
+updateProfileImage();
+
+showNotification("🖼️ تم تغيير الصورة.");
+
+};
+
+img.src=e.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+function removePhoto(){
+
+profileImage="";
+
+localStorage.removeItem("tl8_profile_image");
+
+document.getElementById("imageInput").value="";
+
+updateProfileImage();
+
+showNotification("🗑️ تم حذف الصورة.");
+
+}
+
+function updateProfileImage(){
+
+const img=document.getElementById("profileImage");
+const emoji=document.getElementById("avatarEmoji");
+
+if(profileImage){
+
+img.src=profileImage;
+img.style.display="block";
+emoji.style.display="none";
+
+}else{
+
+img.src="";
+img.style.display="none";
+emoji.style.display="block";
+
+}
+
+}
+
+
+/* SETTINGS */
+
+function saveName(){
+
+const input=document.getElementById("nameInput");
+
+const value=input.value.trim();
+
+if(value===""){
+
+showNotification("اكتب اسمًا أولًا.");
+return;
+
+}
+
+userName=value;
+
+localStorage.setItem(
+"tl9_username",
+userName
+);
+
+updateName();
+
+showNotification("✅ تم حفظ الاسم.");
+
+}
+
+function updateName(){
+
+document.getElementById("profileName")
+.textContent=userName;
+
+}
+
+
+function toggleDarkMode(){
+
+darkMode=document.getElementById("darkMode").checked;
+
+localStorage.setItem(
+"tl9_dark_mode",
+darkMode
+);
+
+applyTheme();
+
+}
+
+function applyTheme(){
+
+if(darkMode){
+
+document.body.classList.remove("light");
+
+}else{
+
+document.body.classList.add("light");
+
+}
+
+document.getElementById("darkMode").checked=darkMode;
+
+}
+
+
+function toggleNotifications(){
+
+notifications=
+document.getElementById("notifications").checked;
+
+localStorage.setItem(
+"tl9_notifications",
+notifications
+);
+
+showNotification(
+notifications
+?
+"🔔 تم تشغيل الإشعارات."
+:
+"🔕 تم إيقاف الإشعارات."
+);
+
+}
+
+
+/* RESET */
+
+function resetAllData(){
+
+const answer=confirm(
+"⚠️ هل أنت متأكد؟ سيتم حذف تقدمك وبيانات TradeLearn."
+);
+
+if(!answer)return;
+
+const keys=[
+
+"tl8_balance",
+"tl8_shares",
+"tl8_price",
+"tl8_points",
+"tl8_lessons",
+"tl8_history",
+"tl8_prices",
+"tl8_quiz_reward",
+"tl8_profile_image",
+"tl9_username",
+"tl9_dark_mode",
+"tl9_notifications"
+
+];
+
+keys.forEach(
+key=>localStorage.removeItem(key)
+);
+
+showNotification(
+"تمت إعادة ضبط TradeLearn."
+);
+
+setTimeout(
+()=>location.reload(),
+1000
+);
+
+}
+
+
+/* ACHIEVEMENTS */
+
+function updateAchievements(){
+
+document.getElementById("achievementLesson")
+.classList.toggle(
+"locked",
+lessons.length===0
+);
+
+document.getElementById("achievementQuiz")
+.classList.toggle(
+"locked",
+!quizReward
+);
+
+document.getElementById("achievementTrade")
+.classList.toggle(
+"locked",
+history.length===0
+);
+
+document.getElementById("achievementPoints")
+.classList.toggle(
+"locked",
+points<100
+);
+
+}
+
+
+/* SAVE */
+
+function saveData(){
+
+localStorage.setItem("tl8_balance",balance);
+localStorage.setItem("tl8_shares",shares);
+localStorage.setItem("tl8_price",price);
+localStorage.setItem("tl8_points",points);
+
+localStorage.setItem(
+"tl8_lessons",
+JSON.stringify(lessons)
+);
+
+localStorage.setItem(
+"tl8_history",
+JSON.stringify(history)
+);
+
+localStorage.setItem(
+"tl8_prices",
+JSON.stringify(prices)
+);
+
+}
+
+
+/* UI */
+
+function updateUI(){
+
+const level=Math.floor(points/100)+1;
+
+const progress=Math.min(
+100,
+Math.round(lessons.length/4*100)
+);
+
+document.getElementById("topBalance")
+.textContent=balance.toFixed(2);
+
+document.getElementById("homeBalance")
+.textContent=balance.toFixed(2);
+
+document.getElementById("walletBalance")
+.textContent=balance.toFixed(2);
+
+document.getElementById("walletShares")
+.textContent=shares;
+
+document.getElementById("walletPrice")
+.textContent=price.toFixed(2);
+
+document.getElementById("marketPrice")
+.textContent=price.toFixed(2);
+
+document.getElementById("homePoints")
+.textContent=points;
+
+document.getElementById("profilePoints")
+.textContent=points;
+
+document.getElementById("homeLevel")
+.textContent=level;
+
+document.getElementById("profileLevel")
+.textContent=level;
+
+document.getElementById("progressBar")
+.style.width=progress+"%";
+
+document.getElementById("progressText")
+.textContent=progress+"%";
+
+document.getElementById("portfolioValue")
+.textContent=(
+balance+shares*price
+).toFixed(2);
+
+const high=Math.max(...prices);
+const low=Math.min(...prices);
+
+const first=prices[0]||100;
+
+const change=((price-first)/first)*100;
+
+document.getElementById("marketHigh")
+.textContent=high.toFixed(2);
+
+document.getElementById("marketLow")
+.textContent=low.toFixed(2);
+
+document.getElementById("marketChange")
+.textContent=change.toFixed(2)+"%";
+
+const historyBox=document.getElementById("history");
+
+if(history.length===0){
+
+historyBox.innerHTML=
+"لا توجد عمليات حتى الآن.";
+
+}else{
+
+historyBox.innerHTML=
+history.map(item=>
+`<div class="history-item">${item}</div>`
+).join("");
+
+}
+
+updateAchievements();
+updateProfileImage();
+updateName();
+
+}
+
+
+/* NOTIFICATION */
+
+function showNotification(message){
+
+if(!notifications)return;
+
+const box=document.getElementById("notification");
+
+box.textContent=message;
+
+box.classList.add("show");
+
+setTimeout(
+()=>{
+box.classList.remove("show");
+},
+2200
+);
+
+}
+
+
+/* START */
+
+document.getElementById("nameInput")
+.value=userName;
+
+document.getElementById("notifications")
+.checked=notifications;
+
+applyTheme();
+updateUI();
+startQuiz();
+
+window.addEventListener(
+"resize",
+drawChart
+);
+
+</script>
+
+</body>
+</html>
